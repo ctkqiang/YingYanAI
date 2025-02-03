@@ -1,3 +1,45 @@
+# Data directories
 /images/
+/models/
+/log/
 
+# Model files
+*.h5
+*.keras
+*.pb
+*.tflite
+
+# Image files
 *.jpg
+*.jpeg
+*.png
+*.bmp
+*.gif
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Logs
+*.log
+logs/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/

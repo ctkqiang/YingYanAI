@@ -1,5 +1,7 @@
+import os
 import logging
 import sys
+from datetime import datetime
 
 
 def setup_logger(name: str) -> logging.Logger:
@@ -16,7 +18,7 @@ def setup_logger(name: str) -> logging.Logger:
 
     # 配置日志格式
     formatter = logging.Formatter(
-        "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        "[鹰眼AI]:  %(asctime)s - %(name)s - %(levelname)s - %(message)s"
     )
 
     # 配置控制台输出处理器
@@ -25,8 +27,14 @@ def setup_logger(name: str) -> logging.Logger:
     logger.addHandler(console_handler)
 
     # 配置文件输出处理器
-    file_handler = logging.FileHandler("app.log")
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    log_dir = "log"
+
+    os.makedirs(log_dir, exist_ok=True)
+    
+    file_handler = logging.FileHandler(f"{log_dir}/app_{timestamp}.log")
     file_handler.setFormatter(formatter)
+    
     logger.addHandler(file_handler)
 
     return logger
