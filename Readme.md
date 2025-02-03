@@ -218,11 +218,11 @@ from sklearn.metrics import classification_report
 # 加载测试数据
 
 test_generator = val_datagen.flow_from_directory(
-"images/test",
-target_size=img_size,
-batch_size=batch_size,
-class_mode="categorical",
-shuffle=False
+  "images/test",
+  target_size=img_size,
+  batch_size=batch_size,
+  class_mode="categorical",
+  shuffle=False
 )
 
 # 评估模型
@@ -248,6 +248,7 @@ img_array = tf.keras.preprocessing.image.img_to_array(img)
 img_array = tf.expand_dims(img_array, 0) # 添加批次维度
 
 predictions = model.predict(img_array)
+
 print(f"预测结果: {predictions}")
 ```
 
