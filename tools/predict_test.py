@@ -55,8 +55,12 @@ def test_prediction():
             result = response.json()
             if result.get("success"):
                 logger.info("预测结果:")
-                logger.info(f"类别: {result['predicted_class']}")
+                logger.info(f"类别: {result['class_name']}")
                 logger.info(f"置信度: {result['confidence']:.2%}")
+
+                if result["confidence"] > 0.5:
+                    logger.info(f"是否包含限制级内容: 【是】")
+
             else:
                 logger.error(f"预测失败: {result.get('error', '未知错误')}")
         else:

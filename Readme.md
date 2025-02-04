@@ -102,17 +102,63 @@ python src/download_data.py
 - validation/ : 验证数据集
 - test/ : 测试数据集
 
+#### 直接训练模型
+
+完成数据采集后，可以直接运行模型训练：
+
+```bash
+python src/YingYanAI.py
+```
+
+训练过程输出示例：
+```bash
+[鹰眼 AI]: 2025-02-04 12:44:24,490 - **main** - INFO - TensorFlow 版本: 2.13.0
+Found 15 images belonging to 3 classes.
+Found 15 images belonging to 3 classes.
+[鹰眼 AI]: 2025-02-04 12:44:26,852 - **main** - INFO - 开始训练模型...
+Epoch 1/10
+1/1 [==============================] - 6s 6s/step - loss: 1.2042 - accuracy: 0.4000 - val_loss: 1.2801 - val_accuracy: 0.4667
+Epoch 2/10
+1/1 [==============================] - 2s 2s/step - loss: 1.3403 - accuracy: 0.4000 - val_loss: 1.1074 - val_accuracy: 0.5333
+Epoch 3/10
+1/1 [==============================] - 1s 1s/step - loss: 1.6560 - accuracy: 0.2667 - val_loss: 0.9599 - val_accuracy: 0.5333
+Epoch 4/10
+1/1 [==============================] - 2s 2s/step - loss: 1.5020 - accuracy: 0.4667 - val_loss: 0.8382 - val_accuracy: 0.7333
+Epoch 5/10
+1/1 [==============================] - 1s 1s/step - loss: 1.0760 - accuracy: 0.4667 - val_loss: 0.7422 - val_accuracy: 0.7333
+Epoch 6/10
+1/1 [==============================] - 1s 1s/step - loss: 1.0561 - accuracy: 0.6000 - val_loss: 0.6698 - val_accuracy: 0.8667
+Epoch 7/10
+1/1 [==============================] - 1s 1s/step - loss: 1.0602 - accuracy: 0.3333 - val_loss: 0.6113 - val_accuracy: 0.8667
+Epoch 8/10
+1/1 [==============================] - 1s 1s/step - loss: 0.6969 - accuracy: 0.8000 - val_loss: 0.5660 - val_accuracy: 0.8667
+Epoch 9/10
+1/1 [==============================] - 1s 1s/step - loss: 0.8998 - accuracy: 0.6000 - val_loss: 0.5307 - val_accuracy: 0.8667
+Epoch 10/10
+1/1 [==============================] - 2s 2s/step - loss: 0.9569 - accuracy: 0.7333 - val_loss: 0.5009 - val_accuracy: 0.8667
+[鹰眼 AI]: 2025-02-04 12:44:47,790 - **main** - INFO - 模型训练完成!
+[鹰眼 AI]: 2025-02-04 12:44:48,118 - **main** - INFO - 模型已保存至: models/yingyan_model.h5
+```
+训练过程监控:
+- 每个 epoch 会显示:
+  - loss: 训练损失值
+  - accuracy: 训练准确率
+  - val_loss: 验证损失值
+  - val_accuracy: 验证准确率
+- 训练完成后模型自动保存到 models/yingyan_model.h5
+- 详细日志记录在 log 目录下
+
 
 ### 启动服务
 
 1. 开发环境
 ```bash
-uvicorn src.app:app --host 0.0.0.0 --port 8000 --reload
+cd src && uvicorn app:app --host 0.0.0.0 --port 8000 --reload
 ```
 
 2. 生产环境
 ```bash
-uvicorn src.app:app --host 0.0.0.0 --port 8000 --workers 4
+cd src && uvicorn src.app:app --host 0.0.0.0 --port 8000 --workers 4
 ```
 
 服务将在 http://localhost:8000 启动，可通过 http://localhost:8000/docs 访问交互式 API 文档。
@@ -153,6 +199,7 @@ python tools/predict_test.py
 [鹰眼 AI]: 2025-02-04 03:46:20,477 - **main** - INFO - 预测结果:
 [鹰眼 AI]: 2025-02-04 03:46:20,477 - **main** - INFO - 类别: 1
 [鹰眼 AI]: 2025-02-04 03:46:20,477 - **main** - INFO - 置信度: 98.90%
+[鹰眼 AI]: 2025-02-04 03:46:20,477 - **main** - INFO - 是否包含限制级内容: 【是】
 ```
 
 

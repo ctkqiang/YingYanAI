@@ -1,60 +1,81 @@
 from datetime import datetime
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi import FastAPI, File, UploadFile, HTTPException, status
+from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image
 import io
 import os
 import numpy as np
 import tensorflow as tf
-from src.YingYanAI import YingYanAI
-from src.logger_config import setup_logger
+from YingYanAI import YingYanAI
+from logger_config import setup_logger
 
 # 设置日志记录器
 logger = setup_logger(__name__)
 
-app = FastAPI(title="鹰眼AI API", description="图像识别服务API")
+app = FastAPI(
+    title="鹰眼AI API",
+    description="智能图像识别服务API",
+    version="1.0.0",
+    docs_url="/docs",
+    redoc_url="/redoc",
+)
 
-# 加载模型
-# Add global variable for class names
+# Enable CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Global variables
 model = None
 class_names = []
+ALLOWED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp"}
 
 
 @app.on_event("startup")
-async def load_model():
-    """启动时加载模型，如果模型不存在则训练新模型"""
+def load_model():
+    """加载模型和类别名称"""
     global model, class_names
 
-    model_path = "models/yingyan_model.h5"
+    model_path = "../models/yingyan_model.h5"
     class_names_path = "models/class_names.txt"
+
+    if not os.path.exists(model_path):
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="模型文件不存在，请先运行 python src/YingYanAI.py 训练模型",
+        )
 
     try:
         model = tf.keras.models.load_model(model_path)
-        # Load class names if exists
         if os.path.exists(class_names_path):
             with open(class_names_path, "r") as f:
                 class_names = f.read().splitlines()
         logger.info("模型加载成功")
     except Exception as e:
-        logger.warning(f"模型加载失败: {str(e)}")
-        logger.info("开始训练新模型...")
-
-        # 训练新模型
-        yyi = YingYanAI()
-
-        history = yyi.train(epochs=10)
-
-        class_names = list(yyi.train_generator.class_indices.keys())
-        os.makedirs(os.path.dirname(class_names_path), exist_ok=True)
-        with open(class_names_path, "w") as f:
-            f.write("\n".join(class_names))
-
-        # 重新加载保存的模型
-        model = tf.keras.models.load_model(model_path)
-        logger.info("新模型训练完成并加载成功")
+        logger.error(f"模型加载失败: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="模型加载失败，请确保模型文件完整",
+        )
 
 
-@app.post("/predict")
+# Load model at startup
+load_model()
+
+
+@app.post("/predict", status_code=status.HTTP_200_OK)
 async def predict(file: UploadFile = File(...)):
+    """图像预测接口"""
+    if not model:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="模型未加载，请先运行 python src/YingYanAI.py 训练模型",
+        )
+
     try:
         # 读取和预处理图像
         contents = await file.read()

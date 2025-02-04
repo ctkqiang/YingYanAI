@@ -2,7 +2,7 @@ import os
 import tensorflow as tf
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.applications import MobileNetV2
-from src.logger_config import setup_logger
+from logger_config import setup_logger
 
 # 设置日志记录器
 logger = setup_logger(__name__)

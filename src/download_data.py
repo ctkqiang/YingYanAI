@@ -17,10 +17,18 @@ def download_images(
     max_num: int = 5,
     save_dir: str = "images",
     is_train: bool = False,
+    is_validation: bool = False,
+    is_test: bool = False,
 ) -> Optional[str]:
     try:
         if is_train:
             save_dir = "images/train"
+        elif is_validation:
+            save_dir = "images/validation"
+        elif is_test:
+            save_dir = "images/test"
+        else:
+            save_dir = "images"
 
         os.makedirs(save_dir, exist_ok=True)
         keyword_dir = os.path.join(save_dir, keywords)
@@ -65,7 +73,6 @@ def main():
         sys.exit(1)
 
     try:
-        is_training = input("是否为训练集？(y/n): ").lower() == "y"
         max_num = int(input("需要下载多少张图片？(默认: 5): ") or "5")
         if max_num <= 0:
             raise ValueError
@@ -73,14 +80,32 @@ def main():
         logger.error("Invalid number of images specified")
         sys.exit(1)
 
-    save_path = download_images(
-        keywords=keywords, max_num=max_num, is_train=is_training
+    save_path_train = download_images(
+        keywords=keywords,
+        max_num=max_num,
+        is_train=True,
     )
 
-    if save_path:
-        logger.info(f"Download completed. Images saved in: {save_path}")
+    save_path_test = download_images(
+        keywords=keywords,
+        max_num=max_num,
+        is_test=True,
+    )
+
+    save_path_validation = download_images(
+        keywords=keywords,
+        max_num=max_num,
+        is_validation=True,
+    )
+
+    if save_path_train:
+        logger.info(f"训练集下载完成，保存路径: {save_path_train}")
+    elif save_path_test:
+        logger.info(f"测试集下载完成，保存路径: {save_path_test}")
+    elif save_path_validation:
+        logger.info(f"验证集下载完成，保存路径: {save_path_validation}")
     else:
-        logger.error("Download failed")
+        logger.error("数据下载失败")
 
 
 if __name__ == "__main__":
