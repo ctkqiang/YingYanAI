@@ -27,25 +27,25 @@
 
 ```bash
 YiShouAI/
-├── src/                  # 源代码目录
+├── src/                 # 源代码目录
 │   ├── YingYanAI.py     # 核心AI模型实现
 │   ├── app.py           # FastAPI 服务实现
 │   ├── download_data.py # 数据采集工具
-│   └── logger_config.py # 日志配置
+│   └── logger_config.py  # 日志配置
 ├── tools/               # 实用工具目录
 │   └── predict_test.py  # 预测功能测试工具
 ├── models/              # 模型存储目录
 │   ├── yingyan_model.h5 # 训练后的模型文件
 │   └── class_names.txt  # 类别名称映射文件
 ├── images/              # 图像数据目录
-│   ├── train/          # 训练数据集
-│   │   ├── {关键词1}/  # 根据搜索关键词自动创建的类别目录
-│   │   └── {关键词2}/  # 根据搜索关键词自动创建的类别目录
-│   ├── validation/     # 验证数据集
-│   └── test/          # 测试数据集
-├── log/                # 日志文件目录
-│   └── *.log          # 运行日志文件
-└── README.md          # 项目说明文档
+│   ├── train/           # 训练数据集
+│   │   ├── {关键词1}/    # 根据搜索关键词自动创建的类别目录
+│   │   └── {关键词2}/    # 根据搜索关键词自动创建的类别目录
+│   ├── validation/      # 验证数据集
+│   └── test/            # 测试数据集
+├── log/                 # 日志文件目录
+│   └── *.log            # 运行日志文件
+└── README.md            # 项目说明文档
 ```
 
 
@@ -255,7 +255,7 @@ python tools/predict_test.py
 - 磁盘空间：500MB 以上
 
 ## 算法
-![鹰眼AI系统流程图](docs/assets/algorithm.png)
+![鹰眼AI系统流程图](https://github.com/ctkqiang/YingYanAI/blob/main/assets/algorithm.png?raw=true)
 
 
 ## 评估模型：
