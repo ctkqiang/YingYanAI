@@ -58,7 +58,7 @@ def process_frame(frame):
     predicted_class = np.argmax(predictions[0])
 
     # 根据预测结果映射到具体文字信息
-    if predicted_class == 1:
+    if predicted_class == 1 or predicted_class == 5:
         class_name = "Nude"
         text_color = (0, 0, 255)  # 红色
     elif predicted_class == 3:
