@@ -53,6 +53,7 @@ def process_frame(frame):
 
     # 图像预处理
     processed_frame = preprocess_image(frame)
+
     # 进行预测
     predictions = model.predict(processed_frame)
     predicted_class = np.argmax(predictions[0])
