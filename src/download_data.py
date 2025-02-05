@@ -22,13 +22,13 @@ def download_images(
 ) -> Optional[str]:
     try:
         if is_train:
-            save_dir = "../images/train"
+            save_dir = "images/train"
         elif is_validation:
-            save_dir = "../images/validation"
+            save_dir = "images/validation"
         elif is_test:
-            save_dir = "../images/test"
+            save_dir = "images/test"
         else:
-            save_dir = "../images"
+            save_dir = "images"
 
         os.makedirs(save_dir, exist_ok=True)
         keyword_dir = os.path.join(save_dir, keywords)
