@@ -1,0 +1,65 @@
+@startuml 鹰眼AI实时监控系统
+
+skinparam backgroundColor #FFFFFF
+skinparam handwritten false
+skinparam defaultFontName Microsoft YaHei
+
+title 鹰眼AI实时监控系统流程图
+
+participant "主程序" as Main
+participant "摄像头" as Camera
+participant "视频写入器" as VideoWriter
+participant "图像处理器" as ImageProcessor
+participant "AI模型" as Model
+participant "显示界面" as Display
+
+activate Main
+Main -> Model: 加载模型(yingyan_model.h5)
+activate Model
+
+Main -> Camera: 初始化摄像头
+activate Camera
+
+Main -> VideoWriter: 初始化视频写入器
+activate VideoWriter
+
+loop 实时监控循环
+    Camera -> Main: 读取视频帧
+    Main -> ImageProcessor: 预处理图像帧
+    activate ImageProcessor
+    
+    ImageProcessor -> Model: 请求预测
+    Model --> ImageProcessor: 返回预测结果
+    
+    ImageProcessor -> ImageProcessor: 添加时间戳和尺寸信息
+    ImageProcessor -> ImageProcessor: 添加预测结果标注
+    
+    ImageProcessor --> Main: 返回处理后的帧
+    deactivate ImageProcessor
+    
+    Main -> Display: 显示处理后的帧
+    activate Display
+    Main -> VideoWriter: 写入视频文件
+    
+    alt 按下 'q' 键
+        Main -> Main: 退出循环
+    else 按下 's' 键
+        Main -> Main: 保存截图
+    end
+end
+
+Main -> Camera: 释放摄像头
+deactivate Camera
+
+Main -> VideoWriter: 关闭视频写入器
+deactivate VideoWriter
+
+Main -> Display: 关闭显示窗口
+deactivate Display
+
+Main -> Model: 结束会话
+deactivate Model
+
+deactivate Main
+
+@enduml

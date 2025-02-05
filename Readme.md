@@ -291,6 +291,10 @@ python tools/live.py
 ## 算法
 ![鹰眼AI系统流程图](https://github.com/ctkqiang/YingYanAI/blob/main/assets/algorithm.png?raw=true)
 
+## 实时监控系统算法
+![鹰眼AI系统流程图](https://github.com/ctkqiang/YingYanAI/blob/main/assets/algorithm.png?raw=true)
+
+
 
 ## 评估模型：
 在 `src/YingYanAI.py` 中添加以下代码来评估模型性能：
