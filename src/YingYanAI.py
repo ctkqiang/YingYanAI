@@ -10,7 +10,7 @@ logger = setup_logger(__name__)
 
 class YingYanAI:
     def __init__(
-        self, train_dir="images/train", img_size=(224, 224), batch_size=32
+        self, train_dir="../images/train", img_size=(224, 224), batch_size=32
     ) -> None:
         """
         初始化鹰眼AI系统
@@ -40,6 +40,7 @@ class YingYanAI:
             include_top=False,  # 不包含顶层分类器
             input_shape=(img_size[0], img_size[1], 3),  # 设置输入图像尺寸和通道数
         )
+
         self.base_model.trainable = False  # 冻结预训练模型的权重，只训练新添加的分类层
 
         # 设置训练数据生成器，从目录中加载和预处理训练图像
@@ -52,7 +53,7 @@ class YingYanAI:
 
         # 设置验证数据生成器，用于评估模型性能
         self.validation_generator = self.val_datagen.flow_from_directory(
-            "images/validation",  # 验证数据目录
+            "../images/validation",  # 验证数据目录
             target_size=img_size,
             batch_size=batch_size,
             class_mode="categorical",
@@ -101,7 +102,7 @@ class YingYanAI:
         logger.info("模型训练完成!")
 
         # 保存模型
-        model_path = "models/yingyan_model.h5"
+        model_path = "../models/yingyan_model.h5"
         os.makedirs("models", exist_ok=True)  # 确保models目录存在
         self.model.save(model_path)
         logger.info(f"模型已保存至: {model_path}")
