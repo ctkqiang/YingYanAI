@@ -88,8 +88,6 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    if: github.event_name == 'release'
-    environment: production
     
     steps:
     - uses: actions/checkout@v3
