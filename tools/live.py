@@ -20,7 +20,7 @@ def setup_video_writer(cap):
     fourcc = cv2.VideoWriter_fourcc(*"mp4v")
     width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    fps = 20.0
+    fps = 100
 
     # Create videos directory if not exists
     os.makedirs("videos", exist_ok=True)

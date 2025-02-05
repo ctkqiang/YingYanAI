@@ -10,7 +10,7 @@ logger = setup_logger(__name__)
 
 class YingYanAI:
     def __init__(
-        self, train_dir="../images/train", img_size=(224, 224), batch_size=32
+        self, train_dir="images/train", img_size=(224, 224), batch_size=32
     ) -> None:
         """
         初始化鹰眼AI系统
@@ -53,7 +53,7 @@ class YingYanAI:
 
         # 设置验证数据生成器，用于评估模型性能
         self.validation_generator = self.val_datagen.flow_from_directory(
-            "../images/validation",  # 验证数据目录
+            "images/validation",  # 验证数据目录
             target_size=img_size,
             batch_size=batch_size,
             class_mode="categorical",
