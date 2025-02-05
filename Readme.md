@@ -292,7 +292,7 @@ python tools/live.py
 ![鹰眼AI系统流程图](https://github.com/ctkqiang/YingYanAI/blob/main/assets/algorithm.png?raw=true)
 
 ## 实时监控系统算法
-![鹰眼AI系统流程图](https://github.com/ctkqiang/YingYanAI/blob/main/assets/algorithm.png?raw=true)
+![鹰眼AI系统流程图](https://github.com/ctkqiang/YingYanAI/blob/main/assets/live.png?raw=true)
 
 
 
