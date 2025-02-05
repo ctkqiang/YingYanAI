@@ -85,6 +85,8 @@ python src/download_data.py
   red_apple          # 物品类别
   sport_car          # 交通工具
   modern_building    # 建筑类别
+  m*a_kh*lifa        # 模糊匹配
+  mark_zuckerberg    # 人物类别
 ```
 
 示例操作：
