@@ -35,10 +35,18 @@ def display_menu():
 
 def start_api():
     console.print("[bold green]正在启动API服务...[/]")
-    uvicorn.run("src.app:app", host="0.0.0.0", port=8000, reload=True)
+    current_dir = os.getcwd()
+    try:
+        os.chdir("src")
+        sys.path.append(os.getcwd())  # Add src directory to Python path
+        uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=True)
+    finally:
+        sys.path.remove(os.getcwd())  # Clean up Python path
+        os.chdir(current_dir)  # Restore original directory
 
 
 def start_monitor():
+    # 打印启动信息
     console.print("[bold green]正在启动实时监控...[/]")
     os.system("python3 tools/live.py")
 

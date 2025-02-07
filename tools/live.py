@@ -27,7 +27,7 @@ def setup_video_writer(cap):
 
     # Create video file with timestamp
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_path = f"videos/capture_{timestamp}.mp4"
+    output_path = f"videos/capture_{timestamp}.mp4import logging"
 
     return cv2.VideoWriter(output_path, fourcc, fps, (width, height))
 
